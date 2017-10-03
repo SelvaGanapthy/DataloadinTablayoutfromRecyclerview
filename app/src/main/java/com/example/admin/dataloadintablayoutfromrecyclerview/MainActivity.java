@@ -16,23 +16,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity   {
-Toolbar toolbar;
+public class MainActivity extends AppCompatActivity {
+    Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        viewPager=(ViewPager)findViewById(R.id.viewpager);
-        PagerAdapter pagerAdapter=new PagerAdapter(getSupportFragmentManager(),MainActivity.this);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), MainActivity.this);
         viewPager.setAdapter(pagerAdapter);
-        tabLayout=(TabLayout)findViewById(R.id.tab_layout);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        for(int i=0;i<tabLayout.getTabCount();i++)
-        {
-            TabLayout.Tab tab=tabLayout.getTabAt(i);
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
             tab.setCustomView(pagerAdapter.getTabView(i));
         }
     }
@@ -42,24 +42,28 @@ Toolbar toolbar;
         super.onResume();
     }
 
- @Override
-    public boolean onCreateOptionsMenu(MenuItem item1) {
-        int id=item1.getItemId();
-        if(id==R.id.action_settings)
-        {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
             return true;
         }
-        return super.onOptionsItemSelected(item1);
+        return super.onOptionsItemSelected(item);
     }
-    class PagerAdapter extends FragmentPagerAdapter
-    {
-        Context context;
-        String[] titles_tab={"first_tab","second_tab","third_tab"};
 
-        public PagerAdapter(FragmentManager fm,Context context)
-        {
+    class PagerAdapter extends FragmentPagerAdapter {
+        Context context;
+        String[] titles_tab = {"first_tab", "second_tab", "third_tab"};
+
+        public PagerAdapter(FragmentManager fm, Context context) {
             super(fm);
-            this.context=context;
+            this.context = context;
         }
 
         @Override
@@ -69,22 +73,25 @@ Toolbar toolbar;
 
         @Override
         public Fragment getItem(int position) {
-            switch (position)
-            {
-                case 0:return  new BlankFragment();
-                case 1: return  new BlankFragment();
-                case 2:return  new BlankFragment();
+            switch (position) {
+                case 0:
+                    return new BlankFragment();
+                case 1:
+                    return new BlankFragment();
+                case 2:
+                    return new BlankFragment();
             }
             return null;
         }
+
         @Override
-        public CharSequence getPageTitle ( int position){
+        public CharSequence getPageTitle(int position) {
             return titles_tab[position];
         }
-        public View getTabView(int position)
-        {
-            View tab= LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_tab,null);
-            TextView tv=(TextView)tab.findViewById(R.id.custom_text);
+
+        public View getTabView(int position) {
+            View tab = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_tab, null);
+            TextView tv = (TextView) tab.findViewById(R.id.custom_text);
             tv.setText(titles_tab[position]);
             return tab;
         }

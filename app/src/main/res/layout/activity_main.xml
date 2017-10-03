@@ -10,7 +10,6 @@
     android:id="@+id/toolbar"
     android:layout_alignParentTop="true"
     android:elevation="6dp"
-    android:theme="@style"
     android:background="?attr/colorPrimary"
     android:layout_height="wrap_content">
 
